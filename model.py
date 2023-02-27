@@ -41,6 +41,8 @@ def add_system_env_var_permanently(var_name, var_value):
     :param var_value:
     :return:
     """
+
+    os.environ[var_name] = var_value
     os.system('wmic environment create name=\'' + var_name + '\', username=' + os.getenv(
         'USERNAME') + ', variablevalue=\'' + var_value + '\'')
 

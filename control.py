@@ -14,18 +14,19 @@ class ProjectParser(object):
         #tlm_maya_env = tlm_maya_path / 'Default.env'
 
         if init:
+            if model.get_system_env_var(self.worskapces_env_var) is not None:
+                for project in self.get_projects():
+                    print('Found workspaces: ', project)
+            else:
+                model.add_system_env_var_permanently(self.worskapces_env_var, str(self.default_maya_path) + ';')
+                #self.add_projects(str(self.default_maya_path))
+
             if model.get_system_env_var('MAYA_ENV_DIR'):
                 value = model.get_system_env_var('MAYA_ENV_DIR')
                 if model.get_system_env_var('OLD_MAYA_ENV_DIR'):
                     self.add_projects(value)
                 else:
                     model.rename_system_env_var_permanently('MAYA_ENV_DIR', 'OLD_MAYA_ENV_DIR')
-
-            if model.get_system_env_var(worskapces_env_var) is not None:
-                for project in self.get_projects():
-                    print('Found workspaces: ', project)
-            else:
-                self.add_projects(str(self.default_maya_path))
 
     def get_maya_versions(self):
         # Search for Maya folders in the document folder
